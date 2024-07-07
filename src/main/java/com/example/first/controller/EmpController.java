@@ -21,7 +21,7 @@ import com.example.first.model.Employee;
 import com.example.first.service.EmployeeService;
 
 @RestController
-@RequestMapping("/first")
+@RequestMapping("/emp")
 public class EmpController {
 	
 	@Autowired
@@ -36,7 +36,7 @@ public class EmpController {
 	public ResponseEntity<?> getById(@RequestParam("empId") Integer id){
 		Employee emp =  empServ.getByEmpId(id);
 		
-		if(emp.getEmpID() == 0) {
+		if(emp.getEmpId() == 0) {
 			return new ResponseEntity<String>("Employee with the given ID not found",HttpStatus.BAD_REQUEST);
 			
 			
@@ -84,18 +84,20 @@ public class EmpController {
 		}
 		
 	}
-	@PostMapping(value="/save", consumes="application/json ; charset=utf-8")
+	@PostMapping(value="/add", consumes="application/json ; charset=utf-8")
 	public ResponseEntity<?> saveEmployee(@RequestBody Employee emp){
-		Employee isEmpExisting = empServ.getByEmpId(emp.getEmpID());
+		//empID is auto generated so if you hit the post request tiwce, same details will be saved with new emp id
+		//thus no meaning of checking the employee existed.
+		Employee isEmpExisting = empServ.getByEmpId(emp.getEmpId());
 		System.out.println(isEmpExisting.toString());
-		if(isEmpExisting.getEmpID()==0){
+		if(isEmpExisting.getEmpId()==0){
 			Employee savedEmp = empServ.saveEmployee(emp);
 			if(!savedEmp.equals(null)) {
 				return new ResponseEntity<Employee>(savedEmp,HttpStatus.CREATED);
 			
 			}
 			else {
-				return new ResponseEntity<String>("Employee not saved",HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<String>("Employee not added",HttpStatus.BAD_REQUEST);
 			}
 			
 		}
@@ -105,7 +107,7 @@ public class EmpController {
 		
 	}
 	
-	@PostMapping(value="/saveAll", consumes="application/json ; charset=utf-8")
+	@PostMapping(value="/addAll", consumes="application/json ; charset=utf-8")
 	public ResponseEntity<?> saveAllEmployee(@RequestBody List<Employee> emp){
 		
 		if(emp.size() == 0) {
@@ -118,13 +120,19 @@ public class EmpController {
 				return new ResponseEntity<List<Employee>>(listEmployee,HttpStatus.CREATED);
 			}
 			else {
-				return new ResponseEntity<String>("Unable to save all Emplyoee",HttpStatus.BAD_REQUEST);
+				return new ResponseEntity<String>("Unable to add all Emplyoee",HttpStatus.BAD_REQUEST);
 			}
 			
 		}
 	}
-	@PutMapping("/updateEmployee")	
+	@PutMapping("/updateEmp")	
 	public ResponseEntity<?> updateEmployee(@RequestBody Employee emp){
+		Employee isEmpExisting = empServ.getByEmpId(emp.getEmpId());
+		if(isEmpExisting.getEmpId() ==0) {
+			return new ResponseEntity<String>("Employee doesn't exist",HttpStatus.BAD_REQUEST);
+			
+		}
+
 		Employee updatedEmp = empServ.updateEmployee(emp);
 		if(!updatedEmp.equals(null)) {
 			return new ResponseEntity<Employee>(updatedEmp,HttpStatus.CREATED);
@@ -136,7 +144,7 @@ public class EmpController {
 	@DeleteMapping("/deleteEmp")
 	public ResponseEntity<?> deleteEmployee(@RequestParam("empId") Integer id){
 		Employee isEmpExisting = empServ.getByEmpId(id);
-		if(isEmpExisting.getEmpID() ==0) {
+		if(isEmpExisting.getEmpId() ==0) {
 			return new ResponseEntity<String>("Employee doesn't exist",HttpStatus.BAD_REQUEST);
 			
 		}

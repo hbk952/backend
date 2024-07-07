@@ -49,6 +49,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<finalName>first</finalName>
+		<finalName>employee</finalName>
 	</build>
 </project>

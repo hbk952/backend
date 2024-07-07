@@ -62,23 +62,27 @@ public class EmployeeService {
 	}
 	
 	public boolean deleteEmployeeById(int id) {
+		//employee existed checked in controller.
+		//delete employee
+		empRepo.deleteById(id); 
+		//check if it is successfully deleted or not
 		Employee existing = getByEmpId(id);
-		if(!existing.equals(null)) {
-			return false;
+	    System.out.println("isExisting: "+existing);
+		if(existing.getEmpId()==0) {
+			return true;
 		}
 		else {
-			empRepo.deleteById(id);
-			return true;
+			return false;
 		}
 		
 	}
 	
 	
 	public Employee updateEmployee(Employee emp) {
-		Employee existing = getByEmpId(emp.getEmpID());
+		Employee existing = getByEmpId(emp.getEmpId());
 		existing.setEmpDept(emp.getEmpDept());
 		existing.setEmpDesignation(emp.getEmpDesignation());
-		existing.setEmpID(emp.getEmpID());
+		existing.setEmpId(emp.getEmpId());
 		existing.setEmpName(emp.getEmpName());
 		existing.setEmpSalary(emp.getEmpSalary());
 		return empRepo.save(existing);

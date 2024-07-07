@@ -7,12 +7,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name="employee_details")
+@Table(name="emp_details")
 public class Employee {
 	@Id
 	@GeneratedValue
 	@Column(name="emp_id")
-	private int empID;
+	private int empId;
 	@Column(name="emp_name")
 	private String empName;
 	@Column(name="emp_designation")
@@ -27,21 +27,21 @@ public class Employee {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Employee(int empID, String empName, String empDesignation, int empDept, long empSalary) {
+	public Employee(int empId, String empName, String empDesignation, int empDept, long empSalary) {
 		super();
-		this.empID = empID;
+		this.empId = empId;
 		this.empName = empName;
 		this.empDesignation = empDesignation;
 		this.empDept = empDept;
 		this.empSalary = empSalary;
 	}
 
-	public int getEmpID() {
-		return empID;
+	public int getEmpId() {
+		return empId;
 	}
 
-	public void setEmpID(int empID) {
-		this.empID = empID;
+	public void setEmpId(int empId) {
+		this.empId = empId;
 	}
 
 	public String getEmpName() {
@@ -78,7 +78,7 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [empID=" + empID + ", empName=" + empName + ", empDesignation=" + empDesignation + ", empDept="
+		return "Employee [empId=" + empId + ", empName=" + empName + ", empDesignation=" + empDesignation + ", empDept="
 				+ empDept + ", empSalary=" + empSalary + "]";
 	}
 	
