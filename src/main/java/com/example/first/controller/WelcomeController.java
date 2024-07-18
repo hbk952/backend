@@ -13,7 +13,7 @@ public class WelcomeController {
 	}
 	@GetMapping("/health")
 	public String health(){
-		return "this is the health endpoint";
+		return "health endpoint";
 	}
 
 }
