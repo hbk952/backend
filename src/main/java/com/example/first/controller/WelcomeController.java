@@ -11,5 +11,9 @@ public class WelcomeController {
 	public String welcome(){
 		return "Welcome to Employee backend service";
 	}
+	@GetMapping("/health")
+	public String health(){
+		return "Welcome to health endpoint";
+	}
 
 }
